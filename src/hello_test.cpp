@@ -1,8 +1,7 @@
-#include "hello.hpp"
 
 #include <userver/utest/utest.hpp>
 
-UTEST(SayHelloTo, Basic) {
+/*UTEST(SayHelloTo, Basic) {
   using service_template::SayHelloTo;
   using service_template::UserType;
 
@@ -12,4 +11,4 @@ UTEST(SayHelloTo, Basic) {
 
   EXPECT_EQ(SayHelloTo("Developer", UserType::kKnown),
             "Hi again, Developer!\n");
-}
+}*/

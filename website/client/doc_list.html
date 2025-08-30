@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Socket.IO Client</title>
+        <link rel="stylesheet" href="styles.css">
+    </head>
+   
+    <body>  
+        <input type="text" id="DocsName" placeholder="Name of a New Document"> 
+        <button onclick="NewDocument()" style="font-size:25px; background-color: grey; color:antiquewhite">
+            Create a New Document
+        </button>
+
+        <div id="DocsList">            
+        </div>
+
+        <script src="./doc_list.js"></script>
+        <script>
+            function NewDocument() {
+                
+                if (document.getElementById("DocsName").value.length != 0) {
+                    localStorage.setItem('DocsName', null);
+                    localStorage.setItem('DocsName', document.getElementById("DocsName").value);
+                    window.location.href = "C:/Users/oooks/Desktop/JavaProject/client/edit.html";
+                }                
+            }
+        </script>
+         
+    </body>
+    <script src="https://cdn.socket.io/4.8.1/socket.io.min.js" integrity="sha384-mkQ3/7FUtcGyoppY6bz/PORYoGqOl7/aSUMn2ymDOJcapfS6PHqxhRTMh1RR0Q6+" crossorigin="anonymous"></script>
+</html>

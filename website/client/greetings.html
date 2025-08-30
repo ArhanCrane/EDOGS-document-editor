@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Socket.IO Client</title>
+    </head>
+    <body>  
+        <h1>Greetings, reg or log in.</h1>
+        <input type="text" id="nameText" placeholder="login">        
+        <input type="text" id="passwordText" placeholder="password">
+        <br>
+
+        <form id="login_submission">
+            <input type="submit" value="Submit LOG">            
+        </form>
+        <form id="register_submission">
+            <input type="submit" value="Submit REG">            
+        </form>
+
+        <!--
+        <a href="index2.html">
+            <button style="font-size:25px; background-color: aquamarine; color:brown">create a document</button>
+        </a>
+        -->
+    </body>
+    <script src="https://cdn.socket.io/4.8.1/socket.io.min.js" integrity="sha384-mkQ3/7FUtcGyoppY6bz/PORYoGqOl7/aSUMn2ymDOJcapfS6PHqxhRTMh1RR0Q6+" crossorigin="anonymous"></script>
+    <script src="./greetings.js"></script>
+</html>

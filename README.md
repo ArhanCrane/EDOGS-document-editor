@@ -10,11 +10,11 @@ Components:
 
 Three pages:
 1. greetings
-	<p align="center"><img src="greetings.html.png"></p>
+	<p align="center"><img src="pictures/greetings.html.png"></p>
 2. doc_list
-	<p align="center"><img src="doc_list.html.png"></p>
+	<p align="center"><img src="pictures/doc_list.html.png"></p>
 3. edit
-	<p align="center"><img src="edit.html.png"></p>
+	<p align="center"><img src="pictures/edit.html.png"></p>
 ### API
 
 Two websocket handlers:

@@ -17,12 +17,12 @@ Three pages:
 	<p align="center"><img src="pictures/edit.html.png"></p>
 ### API
 
-Two websocket handlers:
-1. websocket-edit
-	path: /char
-	method: GET
+Two websocket handlers: <br>
+1. websocket-edit <br>
+	path: /char <br>
+	method: GET <br>
 	Puts values into json file. (login, DocsName, text) and then inserts it into EDOGS.docs or updates the line
-2. websocket-entry
-	path: /entry
-	method: GET
+2. websocket-entry <br>
+	path: /entry <br>
+	method: GET <br>
 	Stores the login, password, entry_type (login or register) into a json file.

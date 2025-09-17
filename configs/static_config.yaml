@@ -40,6 +40,13 @@ components_manager:
             max-remote-payload: 100000
             fragment-size: 100000
 
+        websocket-docslist:
+            path: /docslist
+            method: GET
+            task_processor: main-task-processor
+            max-remote-payload: 100000
+            fragment-size: 100000
+
         # Dynamic config options. Cache is disabled, updates are disabled.
         dynamic-config:
             # For most of userver dynamic configs, defaults are used, some are overridden here.

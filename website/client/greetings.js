@@ -1,23 +1,24 @@
 const logSubmission = document.getElementById('login_submission');
 const regSubmission = document.getElementById('register_submission');
 
-const socket_chat = new WebSocket('ws://localhost:8080/entry');
+const socket_chat = new WebSocket('ws://localhost:43249/entry');
 
 socket_chat.addEventListener('open', (event) => {
-  localStorage.setItem('DocsList', null);
+  //localStorage.setItem('DocsList', null);
+  //localStorage.setItem('DocsList', null);
     console.log('WebSocket connection opened:', event);
 })
 socket_chat.addEventListener('message', (event) => {
 
   console.log('Message from server:', event.data);
-  if (event.data != "DENIED") {
+  if (event.data == "ACCESS") {
     
-    if (event.data != "ACCESS") {
+    /*if (event.data != "ACCESS") {
       localStorage.setItem('DocsList', null);
       localStorage.setItem('DocsList', event.data);
-    }
+    }*/
     
-    window.location.href = "C:/Users/oooks/Desktop/JavaProject/client/doc_list.html";
+    window.location.href = "C:/Users/oooks/Desktop/website/client/doc_list.html";
       //console.log(login);
   }
 

@@ -76,34 +76,6 @@ public:
                     if (res.AsSingleRow<std::string>() == json["password"].As<std::string>()) {                    
                     message.data = "ACCESS";
 
-                    if (pg_cluster_->Execute(storages::postgres::ClusterHostType::kSlave, 
-                    "SELECT COUNT(*) FROM EDOGS.docs WHERE login=$1", json["login"].As<std::string>()).AsSingleRow<int>() > 0) {
-                        const storages::postgres::ResultSet res = 
-                            pg_cluster_->Execute(storages::postgres::ClusterHostType::kSlave,     
-                        "SELECT title FROM EDOGS.docs WHERE login=$1",
-                        json["login"].As<std::string>());
-
-                        std::string output{};
-                        std::vector<std::string> vec = res.AsContainer<std::vector<std::string>>();
-                        message.data = "";
-                        for (auto& elem : vec) {
-                            message.data += "#" + elem;
-                            std::cout << "#" << elem;
-                        }                        
-                        std::cout << "\n";               
-                        /*for (auto row : res.AsSetOf<std::tuple<std::string, std::string>>(storages::postgres::kRowTag)) {
-                            static_assert(std::is_same_v<decltype(row), std::tuple<std::string, std::string>>,
-                        "Iterate over tuples");
-                        auto [a, b] = row;
-                            output += a;
-                            output += " ";
-                            output += b;
-                            output += "\n";
-                        }*/
-                    }
-
-                    chat.Send(std::move(message));
-
                     }else {
                         message.data = "DENIED";
                         chat.Send(std::move(message));
@@ -238,6 +210,59 @@ public:
 private:
      storages::postgres::ClusterPtr pg_cluster_;
 };
+
+class WebsocketsDocsListHandler final : public server::websocket::WebsocketHandlerBase {
+public:
+    // `kName` is used as the component name in static config
+    static constexpr std::string_view kName = "websocket-docslist";
+ 
+    // Component is valid after construction and is able to accept requests
+    using WebsocketHandlerBase::WebsocketHandlerBase;
+     
+    WebsocketsDocsListHandler(const components::ComponentConfig& config, const components::ComponentContext& context)
+     : server::websocket::WebsocketHandlerBase(config, context),
+     pg_cluster_(context.FindComponent<components::Postgres>("postgres-db-1").GetCluster()) {}
+
+    void Handle(server::websocket::WebSocketConnection& chat, server::request::RequestContext&) const override {
+        server::websocket::Message message;
+        formats::json::Value json;
+        //formats::json::Value json = formats::json::FromString(R"({"key": "value"})");
+        //server::websocket::Message
+        
+        while (!engine::current_task::ShouldCancel()) {
+            chat.Recv(message);               // throws on closed/dropped connection            
+            if (message.close_status) break;  // explicit close if any
+            json = formats::json::MakeObject(                        
+                    "login", message.data);
+            message.data = "";
+
+            if (pg_cluster_->Execute(storages::postgres::ClusterHostType::kSlave, 
+            "SELECT COUNT(*) FROM EDOGS.docs WHERE login=$1", json["login"].As<std::string>()).AsSingleRow<int>() > 0) {
+            const storages::postgres::ResultSet res = 
+                pg_cluster_->Execute(storages::postgres::ClusterHostType::kSlave,     
+                "SELECT title FROM EDOGS.docs WHERE login=$1",
+                json["login"].As<std::string>());
+
+                std::string output{};
+                std::vector<std::string> vec = res.AsContainer<std::vector<std::string>>();
+                message.data = "";
+                for (auto& elem : vec) {
+                    message.data += "#" + elem;
+                    std::cout << "#" << elem;
+                    }                        
+                    std::cout << "\n";               
+                }
+
+            chat.Send(std::move(message));
+            
+            //chat.Send(std::move(message));    // throws on closed/dropped connection
+        }
+        if (message.close_status) chat.Close(*message.close_status);
+    }
+
+private:
+     storages::postgres::ClusterPtr pg_cluster_;
+};
  
 }  // namespace samples::websocket
 
@@ -251,7 +276,8 @@ int main(int argc, char* argv[]) {
   .Append<userver::clients::dns::Component>()
   .Append<userver::components::Postgres>("postgres-db-1")
   .Append<samples::websocket::WebsocketsHandler>()
-  .Append<samples::websocket::WebsocketsEditHandler>();
+  .Append<samples::websocket::WebsocketsEditHandler>()
+  .Append<samples::websocket::WebsocketsDocsListHandler>();
 
   //.Append<server::handlers::ServerMonitor>()
   //.Append<samples::tcp::echo::Echo>();

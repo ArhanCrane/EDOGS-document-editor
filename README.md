@@ -26,3 +26,7 @@ Two websocket handlers: <br>
 	path: /entry <br>
 	method: GET <br>
 	Stores the login, password, entry_type (login or register) into a json file.
+3. websocket-docslist <br>
+	path: /docslist <br>
+	method: GET <br>
+	Returns an array of all documents' names register on a certain login.

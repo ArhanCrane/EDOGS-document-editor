@@ -17,7 +17,7 @@ Three pages:
 	<p align="center"><img src="pictures/edit.html.png"></p>
 ### API
 
-Two websocket handlers: <br>
+Three websocket handlers: <br>
 1. websocket-edit <br>
 	path: /char <br>
 	method: GET <br>

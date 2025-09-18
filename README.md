@@ -30,3 +30,12 @@ Three websocket handlers: <br>
 	path: /docslist <br>
 	method: GET <br>
 	Returns an array of all documents' names register on a certain login.
+
+---
+RoadMap:
+1. Implement **Operational Transformation (OT) or Conflict-free Replicated Data Types (CRDTs)**
+2. Implement **role-based access control** (e.g., editor, viewer, owner) for documents
+3. Consider storing document history for version control and undo/redo functionality
+4. Design the backend with **microservices principles** in mind, even if you start as a monolith. Think about how different components (auth, document service, real-time service) could be separated
+5. Search functionality for finding documents
+6. Implement **caching** (e.g., Redis) for frequently accessed data like active document sessions

@@ -1,7 +1,7 @@
 const logSubmission = document.getElementById('login_submission');
 const regSubmission = document.getElementById('register_submission');
 
-const socket_chat = new WebSocket('ws://localhost:43249/entry');
+const socket_chat = new WebSocket('ws://localhost:34313/entry');
 
 socket_chat.addEventListener('open', (event) => {
   //localStorage.setItem('DocsList', null);

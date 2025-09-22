@@ -14,7 +14,9 @@ socket.on('message', (data) => {
 
 //import {login} from './greetings.js'
 //const socket_login = new WebSocket('ws://localhost:8080/login');
-const socket_chat = new WebSocket('ws://localhost:8080/chat');
+const safeDataSubmission = document.getElementById('safe_data_submission');
+
+const socket_chat = new WebSocket('ws://localhost:34313/chat');
 
 socket_chat.addEventListener('open', (event) => {
     console.log('WebSocket connection opened:', event);
@@ -37,15 +39,24 @@ socket_chat.addEventListener('error', (event) => {
   console.error('WebSocket error:', event);
 });
 
+safeDataSubmission.addEventListener('submit', function(event) {    
+    event.preventDefault();
+
+    //It's a bad solution of bug. FIX IT
+    socket_chat.send(localStorage.getItem('login') + "#" + localStorage.getItem('DocsName') + "#" + document.getElementById("docs").innerHTML);
+    socket_chat.send(localStorage.getItem('login') + "#" + localStorage.getItem('DocsName') + "#" + document.getElementById("docs").innerHTML);
+    
+});
+
 document.addEventListener('keyup', (event) => {
   if (event.key.match(/^[a-z]$/i)) {
       document.getElementById("docs").innerHTML += event.key;
       //socket_chat.send(localStorage.getItem('login') + " " + document.getElementById("docs").innerHTML);
-      socket_chat.send(localStorage.getItem('login') + "#" + localStorage.getItem('DocsName') + "#" + document.getElementById("docs").innerHTML);
+      //socket_chat.send(localStorage.getItem('login') + "#" + localStorage.getItem('DocsName') + "#" + document.getElementById("docs").innerHTML);
   }else if (event.key == "Backspace") {
       document.getElementById("docs").innerHTML = document.getElementById("docs").innerHTML.slice(0, -1);            
       //socket_chat.send(localStorage.getItem('login') + " " + document.getElementById("docs").innerHTML);
-      socket_chat.send(localStorage.getItem('login') + "#" + localStorage.getItem('DocsName') + "#" + document.getElementById("docs").innerHTML);
+      //socket_chat.send(localStorage.getItem('login') + "#" + localStorage.getItem('DocsName') + "#" + document.getElementById("docs").innerHTML);
   };
 });
 

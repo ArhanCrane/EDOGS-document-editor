@@ -1,5 +1,5 @@
 //console.log(localStorage.getItem('DocsList'));
-const socket_chat = new WebSocket('ws://localhost:43249/docslist');
+const socket_chat = new WebSocket('ws://localhost:34313/docslist');
 
 socket_chat.addEventListener('open', (event) => {
     console.log('WebSocket connection opened:', event);
